@@ -4,9 +4,29 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+const Dishes = require('./models/dishes');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var dishRouter = require('./routes/dishRouter');
+var promoRouter = require('./routes/promoRouter');
+
+const url = 'mongodb://localhost:27017/conFusion';
+
+const connect = mongoose.connect(url,{
+
+  useMongoClient:true
+      
+});
+
+connect.then((db)=>{
+  console.log("Connected to the server");
+
+},(err)=>{ console.log(err);
+});
 
 var app = express();
 
@@ -24,6 +44,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+
+app.use('/dishes', dishRouter);
+app.use('/promotions', promoRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
