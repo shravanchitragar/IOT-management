@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 const Dishes = require('./models/dishes');
+const Promos = require('./models/promo');
 
 
 var index = require('./routes/index');
@@ -14,7 +15,7 @@ var users = require('./routes/users');
 var dishRouter = require('./routes/dishRouter');
 var promoRouter = require('./routes/promoRouter');
 
-const url = 'mongodb://localhost:27017/conFusion';
+const url = 'mongodb://localhost:27017/iot';
 
 const connect = mongoose.connect(url,{
 
@@ -45,9 +46,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
-app.use('/dishes', dishRouter);
-app.use('/promotions', promoRouter);
-
+// app.use('/dishes', dishRouter);
+// app.use('/promotions', promoRouter);
+app.use('/endusers', dishRouter);
+app.use('/rooms', promoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
