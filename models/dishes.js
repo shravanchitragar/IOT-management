@@ -21,25 +21,32 @@ const Schema = mongoose.Schema;
 // });
 
 var dishSchema = new Schema({
-         Firstname: {
+         firstname: {
             type: String,
             required: true,
             
         },
-        Lastname: {
+        lastname: {
             type: String,
             required: true,
-           
-    
+        
         },
-        category: {
+        usercategory: {
             type: String,
             required: true
         },
-        ID:{
+        emailid:{
+            type: String,
+            required:true,
+                
+        },
+        sbuid: {
             type:Number,
             required:true
-    
+        },
+        gender:{
+            type: String,
+            required:true
         }
         }    , {
         timestamps: true

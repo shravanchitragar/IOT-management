@@ -28,21 +28,43 @@ dishRouter.route('/')
     .catch((err)=>next(err))
 })
 
-.put((req,res,next)=>{
+// .put((req,res,next)=>{
     
-    res.statusCode = 403;    
-    res.end('This is not supported');
-})
+//     res.statusCode = 403;    
+//     res.end('This is not supported');
+// })
 
-
-.delete((req,res,next)=>{
-    Dishes.remove({})
-    .then((resp)=>{
+.put((req,res,next)=>{
+    Dishes.findOneAndUpdate({emailid : req.body.emailid},{
+        $set : req.body
+    }, {new:true
+    })
+    .then((dish)=>{
         res.statusCode = 200;
         res.setHeader('Content-type','application/json');
         res.json(dish);
     },(err)=>next(err))
     .catch((err)=>next(err))
+   
+})    
+
+// .delete((req,res,next)=>{
+//     Dishes.remove({})
+//     .then((resp)=>{
+//         res.statusCode = 200;
+//         res.setHeader('Content-type','application/json');
+//         res.json(dish);
+//     },(err)=>next(err))
+//     .catch((err)=>next(err))
+
+    .delete((req,res,next)=>{
+        Dishes.findOneAndRemove({emailid : req.body.emailid})
+        .then((resp)=>{
+            res.statusCode = 200;
+            res.setHeader('Content-type','application/json');
+            res.json(dish);
+        },(err)=>next(err))
+        .catch((err)=>next(err))
 
 });
 
